@@ -71,6 +71,7 @@ def chat_with_groq(prompt):
     
 # CRIAR A INTERFACE
 def main():
+    st.image("logo.png", width=200, caption="Sistema Inteligente") 
     st.title("Turismo SaguaTour - Powered by AI")
     
     # Incluir uma imagem de acordo ao sistema escolhido
