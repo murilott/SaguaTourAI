@@ -4,7 +4,7 @@ import pandas as pd
 import numpy as np
 import os
 from groq import Groq
-import plotly.express as px
+#import plotly.express as px
 import fitz
 
 # python -m pip install -r req.txt
@@ -41,13 +41,13 @@ def gerar_resposta(user_query):
     st.write("Resposta do Agente:")
     st.write(response.choices[0].message.content)
     
-def gerar_grafico(graph_request, selected_file):
-    df = dataframes[selected_file]
-    if graph_request in df.columns:
-        fig = px.histogram(df, x=graph_request, title=f"Distribuição de {graph_request}")
-        st.plotly_chart(fig)
-    else:
-        st.warning("Coluna não encontrada no dataset!")
+#def gerar_grafico(graph_request, selected_file):
+#    df = dataframes[selected_file]
+#    if graph_request in df.columns:
+#        fig = px.histogram(df, x=graph_request, title=f"Distribuição de {graph_request}")
+#        st.plotly_chart(fig)
+#    else:
+#        st.warning("Coluna não encontrada no dataset!")
 
 def chat_with_groq(prompt):
     context = "Você é um assistente virtual especializado em turismo local, com foco no bairro Saguaçu, em Joinville, Santa Catarina, Brasil. Seu papel é fornecer informações úteis, dicas personalizadas e sugestões de passeios, gastronomia, hospedagem, pontos turísticos, eventos locais e serviços no bairro e arredores. Seu tom deve ser acolhedor, informativo e entusiástico, como um guia local apaixonado pelo lugar."
