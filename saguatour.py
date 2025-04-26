@@ -68,6 +68,26 @@ def chat_with_groq(prompt):
     st.write("### Resposta do Agente:")
     st.write(response.choices[0].message.content)
     return response.choices[0].message.content
+
+def consultar_dados(prompt):
+    context = "Você é um assistente virtual especializado em turismo local, com foco no bairro Saguaçu, em Joinville, Santa Catarina, Brasil. Seu papel é fornecer informações úteis, dicas personalizadas e sugestões de passeios, gastronomia, hospedagem, pontos turísticos, eventos locais e serviços no bairro e arredores. Seu tom deve ser acolhedor, informativo e entusiástico, como um guia local apaixonado pelo lugar."
+
+    if st.session_state:
+        context_file = st.session_state["document-text"]
+    else:
+        context_file = "Nenhum arquivo encontrado"
+        
+    response = client.chat.completions.create(
+        model="llama-3.3-70b-versatile",
+        messages=[
+            {"role": "system", "content": f"{context}"},
+            {"role": "user", "content": f"{context_file}\n\n Pergunta: {prompt}"}
+        ]
+    )
+
+    st.write("### Resposta do Agente:")
+    st.write(response.choices[0].message.content)
+    return response.choices[0].message.content
     
 # CRIAR A INTERFACE
 def main():
