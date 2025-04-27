@@ -33,6 +33,14 @@ def extract_files(uploader):
                 text += page.get_text("text") 
     return text
 
+def extract_files_pdf(pdf_path):
+    doc = fitz.open(pdf_path)  
+    text = ""
+    for page_num in range(doc.page_count):
+        page = doc.load_page(page_num)  
+        text += page.get_text()  
+    return text
+
 # def gerar_resposta(user_query):
 #     prompt = f"Responda como um analista de dados. Pergunta: {user_query}"
 #     response = client.chat.completions.create(model="llama3-8b-8192",
@@ -97,7 +105,8 @@ def consultar_dados(prompt):
     
 # CRIAR A INTERFACE
 def main():
-    stext = extract_files(DATA_PATH)
+    stext = extract_files_pdf(DATA_PATH)
+    print(DATA_PATH)
     st.session_state["sagua-data"] = stext
 
     col1, col2, col3 = st.columns(3)
