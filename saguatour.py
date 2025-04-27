@@ -12,6 +12,7 @@ import fitz
 
 CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
 LOGO_PATH = os.path.join(CURRENT_DIR, "logo.png")
+DATA_PATH = os.path.join(CURRENT_DIR, "dados_sagua.pdf")
 
 GROQ_API_KEY = os.getenv("GROQ_API_KEY", "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")
 
@@ -21,6 +22,7 @@ if not GROQ_API_KEY:
 client = Groq(api_key=GROQ_API_KEY)
 
 dataframes = {}
+
 
 # função para extrair os arquivos     
 def extract_files(uploader):
@@ -51,11 +53,15 @@ def extract_files(uploader):
 
 def chat_with_groq(prompt):
     context = "Você é um assistente virtual especializado em turismo local, com foco no bairro Saguaçu, em Joinville, Santa Catarina, Brasil. Seu papel é fornecer informações úteis, dicas personalizadas e sugestões de passeios, gastronomia, hospedagem, pontos turísticos, eventos locais e serviços no bairro e arredores. Seu tom deve ser acolhedor, informativo e entusiástico, como um guia local apaixonado pelo lugar."
+    context_file = ""
+    
+    if "document-text" in st.session_state:
+        context_file = context_file + st.session_state["document-text"]
 
-    if st.session_state:
-        context_file = st.session_state["document-text"]
-    else:
-        context_file = "Nenhum arquivo encontrado"
+    if "sagua-data" in st.session_state:
+        context_file = context_file + st.session_state["sagua-data"]
+    # else:
+    #     context_file = "Nenhum arquivo encontrado"
         
     response = client.chat.completions.create(
         model="llama-3.3-70b-versatile",
@@ -91,6 +97,9 @@ def consultar_dados(prompt):
     
 # CRIAR A INTERFACE
 def main():
+    stext = extract_files(DATA_PATH)
+    st.session_state["sagua-data"] = stext
+
     col1, col2, col3 = st.columns(3)
     col2.image("logo.png", width=200, caption="SaguaTour") 
     
@@ -99,7 +108,8 @@ def main():
     # Incluir uma imagem de acordo ao sistema escolhido
     with st.sidebar:
         st.header("Consulte dados sobre o Saguaçu!")
-        st.write("Obtenha informações sobre o bairro Saguaçu")
+        st.write("Obtenha informações sobre o bairro Saguaçu: pontos turísticos, restaurantes e mais")
+
         st.header("Upload Files")
         uploader = st.file_uploader("Adicione arquivos", type="pdf", accept_multiple_files=True)
 
