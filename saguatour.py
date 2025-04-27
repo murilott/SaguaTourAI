@@ -54,7 +54,7 @@ def extract_files(uploader):
 def chat_with_groq(prompt):
     context = "Você é um assistente virtual especializado em turismo local, com foco no bairro Saguaçu, em Joinville, Santa Catarina, Brasil. Seu papel é fornecer informações úteis, dicas personalizadas e sugestões de passeios, gastronomia, hospedagem, pontos turísticos, eventos locais e serviços no bairro e arredores. Seu tom deve ser acolhedor, informativo e entusiástico, como um guia local apaixonado pelo lugar."
     context_file = ""
-    
+
     if "document-text" in st.session_state:
         context_file = context_file + st.session_state["document-text"]
 
@@ -104,11 +104,16 @@ def main():
     col2.image("logo.png", width=200, caption="SaguaTour") 
     
     st.title("Turismo SaguaTour - Powered by AI")
+
+    st.write(st.session_state["sagua-data"])
     
     # Incluir uma imagem de acordo ao sistema escolhido
     with st.sidebar:
         st.header("Consulte dados sobre o Saguaçu!")
-        st.write("Obtenha informações sobre o bairro Saguaçu: pontos turísticos, restaurantes e mais")
+        st.write("Obtenha informações sobre o bairro Saguaçu:")
+        st.markdown("- Restaurantes")
+        st.markdown("- Pontos turísticos")
+        st.markdown("- Parques")
 
         st.header("Upload Files")
         uploader = st.file_uploader("Adicione arquivos", type="pdf", accept_multiple_files=True)
