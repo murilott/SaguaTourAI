@@ -106,15 +106,12 @@ def consultar_dados(prompt):
 # CRIAR A INTERFACE
 def main():
     stext = extract_files_pdf(DATA_PATH)
-    print(DATA_PATH)
     st.session_state["sagua-data"] = stext
 
     col1, col2, col3 = st.columns(3)
     col2.image("logo.png", width=200, caption="SaguaTour") 
     
     st.title("Turismo SaguaTour - Powered by AI")
-
-    st.write(st.session_state["sagua-data"])
     
     # Incluir uma imagem de acordo ao sistema escolhido
     with st.sidebar:
