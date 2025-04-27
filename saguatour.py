@@ -31,15 +31,15 @@ def extract_files(uploader):
                 text += page.get_text("text") 
     return text
 
-def gerar_resposta(user_query):
-    prompt = f"Responda como um analista de dados. Pergunta: {user_query}"
-    response = client.chat.completions.create(model="llama3-8b-8192",
-                                              messages=[{"role": "user", "content": prompt}])
-    st.write("### Resposta do Agente:")
-    st.write(response.choices[0].message.content)
+# def gerar_resposta(user_query):
+#     prompt = f"Responda como um analista de dados. Pergunta: {user_query}"
+#     response = client.chat.completions.create(model="llama3-8b-8192",
+#                                               messages=[{"role": "user", "content": prompt}])
+#     st.write("### Resposta do Agente:")
+#     st.write(response.choices[0].message.content)
     
-    st.write("Resposta do Agente:")
-    st.write(response.choices[0].message.content)
+#     st.write("Resposta do Agente:")
+#     st.write(response.choices[0].message.content)
     
 #def gerar_grafico(graph_request, selected_file):
 #    df = dataframes[selected_file]
@@ -91,13 +91,18 @@ def consultar_dados(prompt):
     
 # CRIAR A INTERFACE
 def main():
-    st.image("logo.png", width=200, caption="Sistema Inteligente") 
+    col1, col2, col3 = st.columns(3)
+    col2.image("logo.png", width=200, caption="SaguaTour") 
+    
     st.title("Turismo SaguaTour - Powered by AI")
     
     # Incluir uma imagem de acordo ao sistema escolhido
     with st.sidebar:
-        st.header("UPLoader Files")
+        st.header("Consulte dados sobre o Saguaçu!")
+        st.write("Obtenha informações sobre o bairro Saguaçu")
+        st.header("Upload Files")
         uploader = st.file_uploader("Adicione arquivos", type="pdf", accept_multiple_files=True)
+
     if uploader:
         text = extract_files(uploader)
         st.session_state["document-text"] = text
